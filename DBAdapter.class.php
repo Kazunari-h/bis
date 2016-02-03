@@ -21,64 +21,94 @@ class DBAdapter{
         $this->pdo = null;
     }
 
-    public function getuser(){
-        return $this->row;
-    }
     public function user_check($mail,$password){
-        $sql = 'SELECT count(*) FROM t_user WHERE  mail = ? AND password = ?';
+        $sql = 'SELECT count(*) FROM t_user WHERE mail = :mail AND password = :password';
         $stmt = $this->pdo->prepare($sql);
-        if ($stmt->execute(array($mail,$password))) {
+        $stmt -> bindValue(':mail',$mail);
+        $stmt -> bindValue(':password',$password);
+        if ($stmt->execute()) {
             while ($row = $stmt->fetch()) {
                 $this->row = $row[0];
             }
         }
     }
 
-    public function getinfo(){
-        return $this->info;
+    public function getuser_cnt(){
+        return $this->row;
     }
+
     public function user_info($mail,$password){
-        $sql = 'SELECT name FROM t_user WHERE  mail = ? AND password = ?';
+        $sql = 'SELECT * FROM t_user WHERE mail = :mail AND password = :password';
         $stmt = $this->pdo->prepare($sql);
-        if ($stmt->execute(array($mail,$password))) {
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $this->info = $row['name'];
+        $stmt -> bindValue(':mail',$mail);
+        $stmt -> bindValue(':password',$password);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+                $this->user = $row;
             }
         }
         $this->pdo = null;
     }
 
-    public function Comment_add($name, $memo){
-        $sql = "INSERT INTO t_comment(name,memo,time) VALUES(:name,:memo,now())";
+    public function getuser(){
+        return $this->user;
+    }
+
+
+    public function reserve_add($title, $lat, $lon, $date, $tag1, $tag2, $tag3, $tag4, $tag5, $tag6, $tag7, $tag8, $min, $max){
+        $sql = "INSERT INTO reserve(title,lat,lon,date,tag1,tag2,tag3,tag4,tag5,tag6,tag7,tag8,min,max)
+         VALUES(:title,:lat,:lon,:date,:tag1,:tag2,:tag3,:tag4,:tag5,:tag6,:tag7,:tag8,:min,:max)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt -> bindValue(':name',$name);
-        $stmt -> bindValue(':memo',$memo);
+        $stmt -> bindValue(':title',$title);
+        $stmt -> bindValue(':lat',$lat);
+        $stmt -> bindValue(':lon',$lon);
+        $stmt -> bindValue(':date',$date);
+        $stmt -> bindValue(':tag1',$tag1);
+        $stmt -> bindValue(':tag2',$tag2);
+        $stmt -> bindValue(':tag3',$tag3);
+        $stmt -> bindValue(':tag4',$tag4);
+        $stmt -> bindValue(':tag5',$tag5);
+        $stmt -> bindValue(':tag6',$tag6);
+        $stmt -> bindValue(':tag7',$tag7);
+        $stmt -> bindValue(':tag8',$tag8);
+        $stmt -> bindValue(':min',$min);
+        $stmt -> bindValue(':max',$max);
         $stmt -> execute();
         $this->pdo = null;
     }
 
-    public function comment_view(){
-        $sql = 'SELECT count(*) FROM t_comment';
-        $stmt = $this->pdo->prepare($sql);
-        $row = $stmt->fetch();
-        if ($stmt->execute()) {
-            while ($row = $stmt->fetch()) {
-                if ($row[0] != 0) {
-                    $sql = 'SELECT name,memo FROM t_comment';
-                    $stmt = $this->pdo->prepare($sql);
-                    if ($stmt->execute()) {
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<p>名前 ";
-                            print_r($row['name']);
-                            echo "</p>";
-                            echo "<p>メモ<br>";
-                            print_r($row['memo']);
-                            echo "</p>";
-                        }
-                    }
-                }
-            }
-        }
-        $this->pdo = null;
-    }
+
+//    public function Comment_add($name, $memo){
+//        $sql = "INSERT INTO t_comment(name,memo,time) VALUES(:name,:memo,now())";
+//        $stmt = $this->pdo->prepare($sql);
+//        $stmt -> bindValue(':name',$name);
+//        $stmt -> bindValue(':memo',$memo);
+//        $stmt -> execute();
+//        $this->pdo = null;
+//    }
+
+//    public function comment_view(){
+//        $sql = 'SELECT count(*) FROM t_comment';
+//        $stmt = $this->pdo->prepare($sql);
+//        $row = $stmt->fetch();
+//        if ($stmt->execute()) {
+//            while ($row = $stmt->fetch()) {
+//                if ($row[0] != 0) {
+//                    $sql = 'SELECT name,memo FROM t_comment';
+//                    $stmt = $this->pdo->prepare($sql);
+//                    if ($stmt->execute()) {
+//                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+//                            echo "<p>名前 ";
+//                            print_r($row['name']);
+//                            echo "</p>";
+//                            echo "<p>メモ<br>";
+//                            print_r($row['memo']);
+//                            echo "</p>";
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        $this->pdo = null;
+//    }
 }

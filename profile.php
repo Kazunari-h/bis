@@ -6,8 +6,7 @@ require('module/module_initialization.php');
 if (!isset($_SESSION["user"])) {
 	header("Location: login.php");
 }else {
-	$name = $_SESSION["user"];
-}
+	$user = $_SESSION["user"];}
 ?>
  <!DOCTYPE html>
  <html>
@@ -27,20 +26,20 @@ if (!isset($_SESSION["user"])) {
 		 <div class="circle center">
 			 <img src="img/a.jpg" width="100" height="100" alt="">
 		 </div>
-		 <h1>船田　晃弘</h1>
-		 <div class="container">
-			 <div class="box border">友達
-				 <br><div class="iro">2</div>
-			 </div>
-			 <div class="box border">投稿
-				 <br><div class="iro">4</div>
-			 </div>
-			 <div class="box"><span class="mar-lef">お気に入り</span>
-				 <br><div class="iro">0</div>
-		 	</div>
-	 	 </div>
+		 <h1><?php echo $user[0]['name'] ?></h1>
+<!--		 <div class="container">-->
+<!--			 <div class="box border">友達-->
+<!--				 <br><div class="iro">2</div>-->
+<!--			 </div>-->
+<!--			 <div class="box border">投稿-->
+<!--				 <br><div class="iro">4</div>-->
+<!--			 </div>-->
+<!--			 <div class="box"><span class="mar-lef">お気に入り</span>-->
+<!--				 <br><div class="iro">0</div>-->
+<!--		 	</div>-->
+<!--	 	 </div>-->
 		 <div class="haba">
-		 	<p>HAL東京IT学部WEB開発学科三年<br>宜しくお願いします。</p>
+		 	<p><?php echo $user[0]['text'] ?></p>
 		 </div>
 	 </div>
 	 <?php require_once('module/menu.php'); ?>

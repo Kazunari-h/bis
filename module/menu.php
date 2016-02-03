@@ -4,8 +4,9 @@
 require('module/module_initialization.php');
 $ninsyo = false;
 
+$user = array();
 if (isset($_SESSION["user"])) {
-    $name = $_SESSION["user"];
+    $user = $_SESSION["user"];
     $ninsyo = true;
 }
 ?>
@@ -18,7 +19,7 @@ if (isset($_SESSION["user"])) {
                         echo '<li><a href="sign_up.php">新規会員登録</a></li>';
                         echo '<li><a href="login.php">ログイン</a></li>';
                     }else{
-                        echo '<li><a href="profile.php">'.$name.'’sプロフィール</a></li>';
+                        echo '<li><a href="profile.php">'.$user[0]['name'].'’sプロフィール</a></li>';
                         echo '<li><a href="profile_edit.php">編集</a></li>';
                         echo '<li><a href="logout.php">ログアウト</a></li>';
                     }

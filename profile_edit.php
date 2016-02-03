@@ -6,8 +6,7 @@ require('module/module_initialization.php');
 if (!isset($_SESSION["user"])) {
 	header("Location: login.php");
 }else {
-	$name = $_SESSION["user"];
-}
+	$user = $_SESSION["user"];}
 ?>
 <!DOCTYPE html>
  <html>
@@ -26,12 +25,12 @@ if (!isset($_SESSION["user"])) {
 	 <div class="content ">
 		 <h1>プロフィール変更</h1>
 		 <form action="" method="post">
-			 名前：<input type="text" name="" value=""><br>
+			 名前：<input type="text" name="" value="<?php echo $user[0]['name'] ?>"><br>
 			 サムネイル：<input type="file" name=""><br>
-			 パスワード：<input type="text" name="" value=""><br>
-			 バイク車種：<input type="text" name="" value=""><br>
-			 一言コメント：<input type="text" name="" value=""><br>
-			 <input type="submit" value="送信">
+			 パスワード：<input type="password" name="" value="<?php echo $user[0][''] ?>"><br>
+<!--			 バイク車種：<input type="text" name="" value=""><br>-->
+			 プロフィール：<br><textarea style="width: 300px;height: 200px;"><?php echo $user[0]['text'] ?></textarea><br>
+			 <input type="submit" value="変更">
 		 </form>
 	 </div>
 	 <?php require_once('module/menu.php'); ?>

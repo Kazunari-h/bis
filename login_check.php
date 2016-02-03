@@ -14,10 +14,10 @@ require('module/module_initialization.php');
 require_once("DBAdapter.class.php");
 $db = new DBAdapter();
 $db -> user_check($mail,$password);
-if ($db->getuser() == 1) {
+if ($db->getuser_cnt() == 1) {
 	$db -> user_info($mail,$password);
 	if (isset($_SESSION["user"])) {
-		$_SESSION["user"] = $db->getinfo();
+		$_SESSION["user"] = $db->getuser();
 	}
 	header("Location: index.php");
 }else {
