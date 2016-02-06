@@ -1,3 +1,4 @@
+
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <link type="text/css" rel="stylesheet" href="css/jquery.mmenu.all.css" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -23,7 +24,7 @@
 
         $('a.disable').click(function(){
             return false;
-        })
+        });
     });
 </script>
 

@@ -54,6 +54,80 @@ class DBAdapter{
         return $this->user;
     }
 
+    public function friend_check($user){
+
+        $sql1 = 'SELECT count(*) FROM friend WHERE my_id = :id AND flag = 1';
+        $stmt = $this->pdo->prepare($sql1);
+        $stmt -> bindValue(':id',$user);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['count(*)'] == 0) {
+            $this->friend = array(array('your_id' => '0'));
+        }else{
+            $sql2 = 'SELECT your_id FROM friend WHERE my_id = :id AND flag = 1';
+            $stmt = $this->pdo->prepare($sql2);
+            $stmt -> bindValue(':id',$user);
+            if ($stmt->execute()) {
+                while ($row = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+                    $this->friend = $row;
+                }
+            }
+            $this->pdo = null;
+        }
+    }
+    public function friend_check2($user){
+
+        $sql1 = 'SELECT count(*) FROM friend WHERE my_id = :id AND flag = 0';
+        $stmt = $this->pdo->prepare($sql1);
+        $stmt -> bindValue(':id',$user);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['count(*)'] == 0) {
+            $this->friend = array(array('your_id' => '0'));
+        }else{
+            $sql2 = 'SELECT your_id FROM friend WHERE my_id = :id AND flag = 0';
+            $stmt = $this->pdo->prepare($sql2);
+            $stmt -> bindValue(':id',$user);
+            if ($stmt->execute()) {
+                while ($row = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+                    $this->friend = $row;
+                }
+            }
+            $this->pdo = null;
+        }
+    }
+
+    public function friend_get(){
+
+        return $this->friend;
+    }
+
+    public function friend_data($user){
+
+        $sql = 'SELECT * FROM t_user WHERE user_id = :id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt -> bindValue(':id',$user);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+                $this->friend_info = $row;
+            }
+        }
+        $this->pdo = null;
+    }
+
+    public function frienddata_get(){
+        return $this->friend_info;
+    }
+
+    public function friend_add($my_id,$your_id){
+        $sql = 'UPDATE friend SET flag = 1 WHERE my_id = :my_id AND your_id = :your_id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt -> bindValue(':my_id',$my_id);
+        $stmt -> bindValue(':your_id',$your_id);
+        $stmt -> execute();
+        $this->pdo = null;
+    }
+
 
     public function reserve_add($title, $lat, $lon, $date, $tag1, $tag2, $tag3, $tag4, $tag5, $tag6, $tag7, $tag8, $min, $max){
         $sql = "INSERT INTO reserve(title,lat,lon,date,tag1,tag2,tag3,tag4,tag5,tag6,tag7,tag8,min,max)

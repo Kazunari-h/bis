@@ -59,4 +59,5 @@ if (!isset($_SESSION["user"])) {
     <?php require_once('module/menu.php'); ?>
 </div>
 </body>
+<?php require_once('module/script_friend.php'); ?>
 </html>

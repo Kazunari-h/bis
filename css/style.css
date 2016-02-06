@@ -97,10 +97,10 @@ nav:not(.mm-menu)
 	padding: 150px 50px 50px 50px;
 }
 
-.mm-menu li.img:after
-{
-	left: 75px !important;
-}
+/*.mm-menu li.img:after*/
+/*{*/
+	/*left: 75px !important;*/
+/*}*/
 .mm-menu li.img a
 {
 	font-size: 16px;
@@ -114,4 +114,16 @@ nav:not(.mm-menu)
 .mm-menu li.img a small
 {
 	font-size: 12px;
+}
+
+.takasa {
+	padding: 10px 10px 10px 20px;
+	padding-top: 50px;
+}
+
+.yoko {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	z-index: 10;
 }

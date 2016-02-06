@@ -7,7 +7,19 @@ if (!isset($_SESSION["user"])) {
 	header("Location: login.php");
 }else {
 	$user = $_SESSION["user"];}
+
+	if(isset($_GET['user_id'])){
+		$your_user = $_GET['user_id'];
+
+		require_once("DBAdapter.class.php");
+		$db = new DBAdapter();
+		$db -> friend_data($your_user);
+		$friend_data = $db->frienddata_get();
+	}else{
+		$your_user = array();
+	}
 ?>
+
  <!DOCTYPE html>
  <html>
  <head>
@@ -26,7 +38,7 @@ if (!isset($_SESSION["user"])) {
 		 <div class="circle center">
 			 <img src="img/a.jpg" width="100" height="100" alt="">
 		 </div>
-		 <h1><?php echo $user[0]['name'] ?></h1>
+		 <h1><?php echo $friend_data[0]['name'] ?></h1>
 <!--		 <div class="container">-->
 <!--			 <div class="box border">友達-->
 <!--				 <br><div class="iro">2</div>-->
@@ -39,13 +51,12 @@ if (!isset($_SESSION["user"])) {
 <!--		 	</div>-->
 <!--	 	 </div>-->
 		 <div class="haba">
-		 	<p><?php echo $user[0]['text'] ?></p>
+		 	<p><?php echo $friend_data[0]['text'] ?></p>
 		 </div>
 	 </div>
 	 <?php require_once('module/menu.php'); ?>
  </div>
  </body>
  <?php require_once('module/script_friend.php'); ?>
-
  </html>
 
