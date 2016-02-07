@@ -1,3 +1,4 @@
+
 var apiKey = 'AIzaSyDVXUkJfb-QQJHLKH2PixU0tFwshlr4qnU';
 
 var placeIdArray = [];
@@ -52,6 +53,7 @@ function initialize(x,y) {
     new google.maps.LatLng(35.681382, 139.766084),
     new google.maps.LatLng(35.681345, 139.768888)
   ])
+
 }
 
 function calcRoute() {
@@ -59,7 +61,7 @@ function calcRoute() {
     origin: start,
     destination: end,
     travelMode: google.maps.TravelMode.DRIVING,
-    avoidHighways: true,
+    avoidHighways: true
   };
   directionsService = new google.maps.DirectionsService();
   directionsService.route(request, function(response, status) {
@@ -78,14 +80,14 @@ function createMarker() {
   }
 
   function successCallback(pos) {
-    if getDistance(lat1,lon1,pos.coords.latitude,pos.coords.longitude) > 200 {
+    //if getDistance(lat1,lon1,pos.coords.latitude,pos.coords.longitude) > 200 {
       lat1 = pos.coords.latitude
       lat2 = pos.coords.longitude
       var marker1 = new google.maps.Marker({
           position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
           map:map
       });
-    }
+    //}
   }
 
   function errorCallback(error) {
@@ -192,8 +194,8 @@ google.maps.event.addDomListener(window, 'load', function() {
 // Snap a user-created polyline to roads and draw the snapped path
 function runSnapToRoad(path) {
   var pathValues = [];
-  for (var i = 0; i < path.getLength(); i++) {
-    pathValues.push(path.getAt(i).toUrlValue());
+  for (var i = 0; i < path.length; i++) {
+    pathValues.push(path[i].toUrlValue());
   }
 
   $.get('https://roads.googleapis.com/v1/snapToRoads', {
@@ -202,7 +204,7 @@ function runSnapToRoad(path) {
     path: pathValues.join('|')
   }, function(data) {
     processSnapToRoadResponse(data);
-    getAndDrawSpeedLimits();
+    //getAndDrawSpeedLimits();
   });
 }
 
@@ -222,31 +224,31 @@ function processSnapToRoadResponse(data) {
 // Gets speed limits (for 100 segments at a time) and draws a polyline
 // color-coded by speed limit. Must be called after processing snap-to-road
 // response.
-function getAndDrawSpeedLimits() {
-  for (var i = 0; i <= placeIdArray.length / 100; i++) {
-    // Ensure that no query exceeds the max 100 placeID limit.
-    var start = i * 100;
-    var end = Math.min((i + 1) * 100 - 1, placeIdArray.length);
-
-    drawSpeedLimits(start, end);
-  }
-}
+//function getAndDrawSpeedLimits() {
+//  for (var i = 0; i <= placeIdArray.length / 100; i++) {
+//    // Ensure that no query exceeds the max 100 placeID limit.
+//    var start = i * 100;
+//    var end = Math.min((i + 1) * 100 - 1, placeIdArray.length);
+//
+//    drawSpeedLimits(start, end);
+//  }
+//}
 
 // Gets speed limits for a 100-segment path and draws a polyline color-coded by
 // speed limit. Must be called after processing snap-to-road response.
-function drawSpeedLimits(start, end) {
-    var placeIdQuery = '';
-    for (var i = start; i < end; i++) {
-      placeIdQuery += '&placeId=' + placeIdArray[i];
-    }
-
-    $.get('https://roads.googleapis.com/v1/speedLimits',
-        'key=' + apiKey + placeIdQuery,
-        function(speedData) {
-          processSpeedLimitResponse(speedData, start);
-        }
-    );
-}
+//function drawSpeedLimits(start, end) {
+//    var placeIdQuery = '';
+//    for (var i = start; i < end; i++) {
+//      placeIdQuery += '&placeId=' + placeIdArray[i];
+//    }
+//
+//    $.get('https://roads.googleapis.com/v1/speedLimits',
+//        'key=' + apiKey + placeIdQuery,
+//        function(speedData) {
+//          processSpeedLimitResponse(speedData, start);
+//        }
+//    );
+//}
 
 // Draw a polyline segment (up to 100 road segments) color-coded by speed limit.
 function processSpeedLimitResponse(speedData, start) {
@@ -287,4 +289,3 @@ function getColorForSpeed(speed_kph) {
   return 'red';
 }
 
-$(window).load(initialize);
