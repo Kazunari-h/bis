@@ -36,71 +36,78 @@ if (isset($_SESSION["user"])) {
                 ?>
             </ul>
         </li>
-
-        <li id="cnt"><span>SNS</span>
+        <li><span>フレンド</span>
             <ul>
-                <li><a href="main.php">投稿一覧</a><!--id="contacts-friends"-->
-                </li>
                 <li><span>フォロー</span>
                     <ul>
-<?php
+                        <?php
+                        if($ninsyo != false) {
+                            if ($friend1[0]['your_id'] != 0) {
+                                foreach ($friend1 as $user1) {
 
-    if($friend1[0]['your_id'] != 0){
-        foreach($friend1 as $user1){
+                                    require_once("DBAdapter.class.php");
+                                    $db2 = new DBAdapter();
+                                    $db2->friend_data($user1['your_id']);
+                                    $friend_data1 = $db2->frienddata_get();
 
-            require_once("DBAdapter.class.php");
-            $db2 = new DBAdapter();
-            $db2 -> friend_data($user1['your_id']);
-            $friend_data1 = $db2->frienddata_get();
-
-            echo '<li class="img">';
-            echo '<a href="friend.php?user_id='.$friend_data1[0]['user_id'].'" >';
-            echo '<img src="http://lorempixel.com/50/50/people/1/" />';
-            echo $friend_data1[0]['name'].'<br />';
-            $friend_data = $friend_data1[0]['name'];
-            echo '<small>スーパーカブ５０</small>';
-            echo '</a>';
-            echo '</li>';
-        }
-    }else{
-        echo '<li><span>友達が登録されていません</span></li>';
-    }
-?>
-
-
-
-<?php
-
-    require_once("DBAdapter.class.php");
-    $db = new DBAdapter();
-    $db -> friend_check2($user[0]['user_id']);
-    $friend2 = $db->friend_get();
-
-    if($friend2[0]['your_id'] != 0){
-        echo '<li><span> </span></li>';
-        echo '<li><span>フォロワー</span>';
-        echo '<ul>';
-        foreach($friend2 as $user2){
-            require_once("DBAdapter.class.php");
-            $db2 = new DBAdapter();
-            $db2 -> friend_data($user2['your_id']);
-            $friend_data2 = $db2->frienddata_get();
-
-            echo '<li class="img" style="position: relative;">';
-            echo '<a href="friend.php?user_id='.$friend_data2[0]['user_id'].'" >';
-            echo '<img src="http://lorempixel.com/50/50/people/1/" />';
-            echo $friend_data2[0]['name'].'<br />';
-            echo '<small>スーパーカブ５０</small>';
-            $friend_data = $friend_data2[0]['user_id'];
-            echo '</a><img class="yoko" src="img/add_btn.png" alt="" width="50px" height="50px" onclick="kakunin()"></li>';
-        }
-        echo '</ul>';
-        echo '</li>';
-    }
-?>
-
-
+                                    echo '<li class="img">';
+                                    echo '<a href="friend.php?user_id=' . $friend_data1[0]['user_id'] . '" >';
+                                    echo '<img src="http://lorempixel.com/50/50/people/1/" />';
+                                    echo $friend_data1[0]['name'] . '<br />';
+                                    $friend_data = $friend_data1[0]['name'];
+                                    echo '<small>スーパーカブ５０</small>';
+                                    echo '</a>';
+                                    echo '</li>';
+                                }
+                            } else {
+                                echo '<li><span>フォローが登録されていません</span></li>';
+                            }
+                        }else{
+                            echo '<li><a href="login.php"><span>ログインしてください</span></a></li>';
+                        }
+                        ?>
                     </ul>
+                </li>
+                <li><span> </span></li>
+                <li><span>フォロワー</span>
+                    <ul>
+                    <?php
+                        if($ninsyo != false) {
+                            require_once("DBAdapter.class.php");
+                            $db = new DBAdapter();
+                            $db->friend_check2($user[0]['user_id']);
+                            $friend2 = $db->friend_get();
+
+                            if ($friend2[0]['your_id'] != 0) {
+                                foreach ($friend2 as $user2) {
+                                    require_once("DBAdapter.class.php");
+                                    $db2 = new DBAdapter();
+                                    $db2->friend_data($user2['your_id']);
+                                    $friend_data2 = $db2->frienddata_get();
+
+                                    echo '<li class="img" style="position: relative;">';
+                                    echo '<a href="friend.php?user_id=' . $friend_data2[0]['user_id'] . '" >';
+                                    echo '<img src="http://lorempixel.com/50/50/people/1/" />';
+                                    echo $friend_data2[0]['name'] . '<br />';
+                                    echo '<small>スーパーカブ５０</small>';
+                                    $friend_data = $friend_data2[0]['user_id'];
+                                    echo '</a><img class="yoko" src="img/add_btn.png" alt="" width="50px" height="50px" onclick="kakunin()"></li>';
+                                }
+                            } else {
+                                echo '<li><span>フォロワーが登録されていません</span></li>';
+                            }
+                        }else{
+                            echo '<li><a href="login.php"><span>ログインしてください</span></a></li>';
+                        }
+                    ?>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li><span>SNS</span>
+            <ul>
+                <li><a href="main.php">投稿一覧</a><!--id="contacts-friends"-->
                 </li>
                 <li><span>お気に入り</span>
                     <ul>
