@@ -115,7 +115,14 @@ if (isset($_SESSION["user"])) {
                 </li>
             </ul>
         </li>
-        <li><a href="calendar.php">カレンダー</a></li>
+        <li><span>ツーリング</span>
+            <ul>
+                <li><span>ツーリング検索</span></li>
+                <li><span>参加中</span></li>
+                <li><span>ツーリング作成</span></li>
+                <li><span>主催</span></li>
+            </ul>
+        </li>
         <li><a href="map.php">地図</a></li>
         <li><span>アルバム</span>
             <ul>

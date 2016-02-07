@@ -8,7 +8,7 @@
         $("nav#menu")
                 .mmenu({
                     extensions 		: [ "pageshadow", "theme-white" ],
-                    counters		: true,
+//                    counters		: true,
                     dividers		: {
                         add				: true,
                         addTo			: "[id*='contacts-']",
