@@ -14,7 +14,7 @@ var center = new google.maps.LatLng(35.681382, 139.766084);
 var start = '東京駅';
 var end = '八王子';
 
-var pathList = [];
+var pathList = new Array("35.681382, 139.766084","35.681345, 139.768888");
 
 var lat1,lon1;
 
@@ -51,10 +51,7 @@ function initialize(x,y) {
 
   // timer = setInterval("createMarker()",10000);
 
-  runSnapToRoad([
-    "35.681382, 139.766084",
-    "35.681345, 139.768888"
-  ])
+  runSnapToRoad()
 
 }
 
@@ -195,15 +192,10 @@ google.maps.event.addDomListener(window, 'load', function() {
 
 // Snap a user-created polyline to roads and draw the snapped path
 function runSnapToRoad(path) {
-  var pathValues = [];
-  for (var i = 0; i < path.length; i++) {
-    pathValues.push(path[i].toUrlValue());
-  }
-
   $.get('https://roads.googleapis.com/v1/snapToRoads', {
     interpolate: true,
     key: apiKey,
-    path: pathValues.join('|')
+    path: path.join('|')
   }, function(data) {
     processSnapToRoadResponse(data);
     //getAndDrawSpeedLimits();
