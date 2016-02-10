@@ -51,7 +51,7 @@ function initialize(x,y) {
 
   // timer = setInterval("createMarker()",10000);
 
-  runSnapToRoad()
+  runSnapToRoad(pathList)
 
 }
 
@@ -108,7 +108,7 @@ function getDistance(lat1, lng1, lat2, lng2) {
 
 google.maps.event.addDomListener(window, 'load', function() {
   initialize(35.681382, 139.766084);
-  calcRoute();
+  //calcRoute();
 
   // if (navigator.geolocation) {
   //     navigator.geolocation.getCurrentPosition(successCallback,errorCallback);
@@ -208,10 +208,11 @@ function processSnapToRoadResponse(data) {
   placeIdArray = [];
   for (var i = 0; i < data.snappedPoints.length; i++) {
     var latlng = new google.maps.LatLng(
-        data.snappedPoints[i].location.latitude,
-        data.snappedPoints[i].location.longitude);
+    data.snappedPoints[i].location.latitude,
+    data.snappedPoints[i].location.longitude);
     snappedCoordinates.push(latlng);
     placeIdArray.push(data.snappedPoints[i].placeId);
+    alert(i);
   }
 }
 
