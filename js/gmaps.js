@@ -14,6 +14,8 @@ var center = new google.maps.LatLng(35.681382, 139.766084);
 var start = '東京駅';
 var end = '八王子';
 
+var pathList = [];
+
 var lat1,lon1;
 
 function initialize(x,y) {
@@ -50,8 +52,8 @@ function initialize(x,y) {
   // timer = setInterval("createMarker()",10000);
 
   runSnapToRoad([
-    new google.maps.LatLng(35.681382, 139.766084),
-    new google.maps.LatLng(35.681345, 139.768888)
+    "35.681382, 139.766084",
+    "35.681345, 139.768888"
   ])
 
 }
@@ -288,4 +290,3 @@ function getColorForSpeed(speed_kph) {
   }
   return 'red';
 }
-
