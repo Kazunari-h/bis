@@ -65,12 +65,12 @@ function createMarker() {
 }
 
 //スタートクリック時
-function clickButton() {
+function clickButton() { //スタートボタン
   btnFlg = !btnFlg
   if(btnFlg){
-    timer = setInterval("createMarker()",10000);
+    timer = setInterval("createMarker()",1000);
   } else {
-    clearInterval(boxAime);
+    clearInterval(timer);
     //ロードマップの描画
     runSnapToRoad(pathList)
   }
@@ -127,23 +127,23 @@ function processSnapToRoadResponse(data) {
     snappedCoordinates.push(latlng);
     placeIdArray.push(data.snappedPoints[i].placeId);
   }
-
-  createLine()
+  createLine();
 }
 
 function createLine() {
-  // ラインを引く座標の配列を作成
-  var points = snappedCoordinates
+  //// ラインを引く座標の配列を作成
+  //var points = snappedCoordinates
+  console.log(snappedCoordinates.length);
 
   // ラインを作成
   var polyLineOptions = {
-      path: points,
-      strokeWeight: 5,
-      strokeColor: "#0000ff",
+      path: snappedCoordinates,
+      strokeWeight: 80,
+      strokeColor: "#ffffff",
       strokeOpacity: "0.5"
   };
 
   // ラインを設定
   var poly = new google.maps.Polyline(polyLineOptions);
-  poly.setMap(mapObj);
+  poly.setMap(map);
 }
