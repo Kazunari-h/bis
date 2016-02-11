@@ -10,6 +10,7 @@ var timer;
 var btnFlg = false;
 
 var center = new google.maps.LatLng(35.681382, 139.766084);
+var startPoint;
 var pathList = new Array();
 
 var lat1,lon1;
@@ -120,6 +121,8 @@ function processSnapToRoadResponse(data) {
   snappedCoordinates = [];
   placeIdArray = [];
   for (var i = 0; i < data.snappedPoints.length; i++) {
+    console.log(data.snappedPoints[i].location.latitude);
+    console.log(data.snappedPoints[i].location.longitude);
     var latlng = new google.maps.LatLng(
       data.snappedPoints[i].location.latitude,
       data.snappedPoints[i].location.longitude
@@ -133,13 +136,14 @@ function processSnapToRoadResponse(data) {
 function createLine() {
   //// ラインを引く座標の配列を作成
   //var points = snappedCoordinates
+  snappedCoordinates.push(new google.maps.LatLng(35.681382, 139.766084));
   console.log(snappedCoordinates.length);
 
   // ラインを作成
   var polyLineOptions = {
       path: snappedCoordinates,
       strokeWeight: 80,
-      strokeColor: "#ffffff",
+      strokeColor: "#000000",
       strokeOpacity: "0.5"
   };
 
