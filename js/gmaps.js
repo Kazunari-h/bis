@@ -10,13 +10,11 @@ var timer;
 var btnFlg = false;
 
 var center = new google.maps.LatLng(35.681382, 139.766084);
-var startPoint;
 var pathList = new Array();
 
 var lat1,lon1;
 
 function initialize(x,y) {
-  pathList.push(x + "," + y)
   var mapOptions = {
     zoom: 14,
     center: new google.maps.LatLng(x, y),
@@ -57,6 +55,7 @@ function createMarker() {
         position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
         map:map
     });
+    pathList.push(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
   }
 
   function errorCallback(error) {
@@ -69,11 +68,11 @@ function createMarker() {
 function clickButton() { //スタートボタン
   btnFlg = !btnFlg
   if(btnFlg){
+    pathList = []
     timer = setInterval("createMarker()",1000);
   } else {
     clearInterval(timer);
-    //ロードマップの描画
-    runSnapToRoad(pathList)
+    createLine();
   }
 }
 
@@ -117,31 +116,11 @@ function runSnapToRoad(path) {
   });
 }
 
-function processSnapToRoadResponse(data) {
-  snappedCoordinates = [];
-  placeIdArray = [];
-  for (var i = 0; i < data.snappedPoints.length; i++) {
-    console.log(data.snappedPoints[i].location.latitude);
-    console.log(data.snappedPoints[i].location.longitude);
-    var latlng = new google.maps.LatLng(
-      data.snappedPoints[i].location.latitude,
-      data.snappedPoints[i].location.longitude
-    );
-    snappedCoordinates.push(latlng);
-    placeIdArray.push(data.snappedPoints[i].placeId);
-  }
-  createLine();
-}
-
 function createLine() {
   //// ラインを引く座標の配列を作成
-  //var points = snappedCoordinates
-  snappedCoordinates.push(new google.maps.LatLng(35.681382, 139.766084));
-  console.log(snappedCoordinates.length);
-
   // ラインを作成
   var polyLineOptions = {
-      path: snappedCoordinates,
+      path: pathList,
       strokeWeight: 80,
       strokeColor: "#000000",
       strokeOpacity: "0.5"
