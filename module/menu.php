@@ -117,7 +117,7 @@ if (isset($_SESSION["user"])) {
         </li>
         <li><span>ツーリング</span>
             <ul>
-                <li><span>ツーリング検索</span></li>
+                <li><a href="view.php"><span>ツーリング検索</span></a></li>
                 <li><span>参加中</span></li>
                 <li><span>ツーリング作成</span></li>
                 <li><span>主催</span></li>

@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (!isset($_SESSION["user"])) {
+	header("Location: login.php");
+}else {
+	$name = $_SESSION["user"];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,6 +26,7 @@ session_start();
 			<div class="content" id="map_canvas" style="width:100%;height:100%;" data-lon="" ></div>
 			<?php require_once('module/menu.php'); ?>
 		</div>
+		<button class="start" onclick="clickButton()">スタート</button>
 	</body>
 	<?php require_once('module/script_friend.php'); ?>
 </html>
